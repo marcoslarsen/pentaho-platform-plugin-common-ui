@@ -126,6 +126,9 @@ define([
         this.base(spec);
 
         this.selectionMode = spec && spec.selectionMode;
+
+        this.clientX = spec && spec.clientX;
+        this.clientY = spec && spec.clientY;
       },
 
       /**

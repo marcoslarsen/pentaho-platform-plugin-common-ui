@@ -1509,14 +1509,14 @@ define([
       _configureSelection: function() {
         var me = this;
         this.options.userSelectionAction = function(cccSelections) {
-          return me._onUserSelection(cccSelections);
+          return me._onUserSelection(cccSelections, this.event);
         };
         this.options.base_event = [["click", function() {
           me._onUserSelection([]);
         }]];
       },
 
-      _onUserSelection: function(selectingDatums) {
+      _onUserSelection: function(selectingDatums, srcEvent) {
         // Duplicates may occur due to excluded dimensions like the discriminator
 
         // TODO: improve detection of viz without attributes.
@@ -1544,7 +1544,9 @@ define([
         var SelectAction = this.type.context.get(selectActionFactory);
         var Or = this.type.context.get("or");
         this.act(new SelectAction({
-          dataFilter: new Or({operands: operands})
+          dataFilter: new Or({operands: operands}),
+          clientX: srcEvent && srcEvent.clientX,
+          clientY: srcEvent && srcEvent.clientY
         }));
 
         // Explicitly cancel CCC's native selection handling.
